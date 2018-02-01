@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-	public GameObject astroid;
+	public GameObject[] astroids;
 	public Vector3 position;
 
 	public Text scoreText;
@@ -45,7 +46,8 @@ public class GameController : MonoBehaviour {
             var minX = Camera.main.ScreenToWorldPoint(new Vector2(0.1f * Screen.width, 0)).x;
             var maxX = Camera.main.ScreenToWorldPoint(new Vector2(0.9f * Screen.width, 0)).x;
             for (int i = 0; i < astroidsPerWave; i++) {
-				Vector3 spawnPosition = new Vector3 (Random.Range (minX, maxX), position.y, position.z);
+                GameObject astroid = astroids[Random.Range(0, astroids.Length)];
+                Vector3 spawnPosition = new Vector3 (Random.Range (minX, maxX), position.y, position.z);
 				Quaternion iQuaternion = Quaternion.identity;
 				Instantiate (astroid, spawnPosition, iQuaternion);
 				yield return new WaitForSeconds (0.5f);
@@ -74,6 +76,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void RestartGame(){
-		Application.LoadLevel (Application.loadedLevel);
+        Application.LoadLevel (Application.loadedLevel);
 	}
 }
